@@ -2,12 +2,14 @@ import React, { useState} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
+import axios from 'axios';
 
 import api from '../Services/api';
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    
     const navigation = useNavigation();
   
     async function handleSignIn(){
