@@ -16,13 +16,19 @@ const width = Dimensions.get('window').width -40;
 
 export default function ProductsItem() {
     const [produtos, setProdutos] = useState<Array<ProductsProps>>([]);
-    
+
     const navigation = useNavigation();
     useEffect(() => {
         api.get(`products`).then(response => { 
             setProdutos(response.data);        
         })    
     },[]);
+
+    //useEffect(() => {
+    //    api.get(`products`).then(response => { 
+    //        setProdutos(response.data);        
+    //    })    
+    //},[linha]);
 
     return(
         <View style={styles.container}>

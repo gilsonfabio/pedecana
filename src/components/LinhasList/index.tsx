@@ -38,7 +38,7 @@ function ListItem({data}: any){
     return(
         <View >
             <TouchableOpacity style={styles.button} onPress={() =>{}}>
-                <Image style={styles.icones} source={require('../../assets/icones/1.png')} />
+                <Image style={styles.icones} source={require(`../../assets/icones/${data.idLinha}.png`)} />
                 <Text style={styles.txtLinha} >{data.lnhDescricao}</Text>
             </TouchableOpacity>    
         </View>
@@ -53,9 +53,11 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: "center",
-        backgroundColor: "#FFF",
-        height: 80,        
-        width: 80,
+        backgroundColor: "#CCC",
+        height: 90,        
+        width: 90,
+        borderRadius: 50,
+        marginLeft: 10,
     },        
 
     icones: {
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
     },
 
     txtLinha: {
-        fontSize: 10,
+        fontSize: 9,
         fontWeight: 'bold',
         color: '#FF7826',
     }

@@ -1,26 +1,19 @@
-import React, { useState} from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useContext} from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
 import api from '../Services/api';
+import { AuthContext } from '../../contexts/auth';
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
-    const navigation = useNavigation();
-  
+    const { signIn } = useContext(AuthContext);
+
     async function handleSignIn(){
-        try {            
-            const response = await api.get(`signIn/${email}/${password}`)
-            //localStorage.setItem('usuarioId', response.data.usrId);
-            //localStorage.setItem('usuarioNome', response.data.usrNome);
-            navigation.navigate('Produtos')
-        } catch (err) {
-            alert('Falha no login! Tente novamente.');
-        }    
+        signIn(email, password)
+  
     }
 
     return (
