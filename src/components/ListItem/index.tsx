@@ -1,17 +1,6 @@
 import React, { useState, useEffect} from 'react';
-import { TouchableOpacity, View, Image, Text, StyleSheet, Dimensions, Alert } from 'react-native';
+import { TouchableOpacity, View, Image, Text, StyleSheet, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-type Nav = {
-  navigate: (value: string) => void;
-}
-
-export interface ProductsProps {
-  idProd: string;
-  proDescricao: string;
-  proReferencia: string;
-  proAvatar: string;
-}
 
 const width = Dimensions.get('window').width - 5; 
 
@@ -19,7 +8,7 @@ const ListItem = ({ data }: any) => {
 
   const codProd = 4;
   const imageUrl = require("../../assets/images/1.jpg");
-  const navigation = useNavigation<Nav>();
+  const navigation = useNavigation();
 
   const [countItens, setCountItens] = useState(0);
 
@@ -42,23 +31,12 @@ const ListItem = ({ data }: any) => {
     { id: 16, path: require('../../assets/images/16.jpg') },
   ];
 
-  async function handleProDetalhe(){
-    try {            
-        navigation.navigate('Detalhes')
-    } catch (err) {
-        Alert.alert(
-          'Atenção!',
-          'Erro no login. Usuário não identificado.',
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: true }
-        );
-    }    
+  function handleDetalhes(){
+    navigation.navigate('Detalhes', {proId: data.idProd});
   }
 
   return (
-    <TouchableOpacity style={styles.item} onPress={handleProDetalhe}>
+    <TouchableOpacity style={styles.item} onPress={handleDetalhes}>
       <View style={[styles.containerProd, styles.shadowProp]}>
         <Image source={imageUrl} style={styles.itemPhoto} />
         <View style={styles.itemInfo}>
@@ -94,6 +72,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
   },
+  
   itemPhoto: {
     width: '100%',
     height: 120,
