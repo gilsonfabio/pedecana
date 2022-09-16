@@ -17,6 +17,7 @@ function AuthProvider({children}: any){
         if(email !== '' && password !== ''){
             api.get(`signIn/${email}/${password}`).then(response => { 
                 setUser({
+                    idUsr: response.data.usrId,
                     nome: response.data.usrNome,
                     email: email,
                     status: "ATIVO"

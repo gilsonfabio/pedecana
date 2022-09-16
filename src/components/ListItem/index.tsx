@@ -2,9 +2,16 @@ import React, { useState, useEffect} from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+type ProductsProps = {
+  idProd: string;
+  proDescricao: string;
+  proReferencia: string;
+  proAvatar: number;
+}
+
 const width = Dimensions.get('window').width - 5; 
 
-const ListItem = ({ data }: any) => {
+const ListItem = ({ data }:any) => {
 
   const codProd = 4;
   const imageUrl = require("../../assets/images/1.jpg");
@@ -13,6 +20,7 @@ const ListItem = ({ data }: any) => {
   const [countItens, setCountItens] = useState(0);
 
   const images = [
+    { id: 0, path: require('../../assets/images/0.jpg') },
     { id: 1, path: require('../../assets/images/1.jpg') },
     { id: 2, path: require('../../assets/images/2.jpg') },
     { id: 3, path: require('../../assets/images/3.jpg') },
@@ -38,10 +46,11 @@ const ListItem = ({ data }: any) => {
   return (
     <TouchableOpacity style={styles.item} onPress={handleDetalhes}>
       <View style={[styles.containerProd, styles.shadowProp]}>
-        <Image source={imageUrl} style={styles.itemPhoto} />
+        <Image source={images[data.proAvatar].path} style={styles.itemPhoto} />
         <View style={styles.itemInfo}>
           <Text style={styles.itemP1}>{data.proDescricao}</Text>
           <Text style={styles.itemP2}>{data.proReferencia}</Text>
+          <Text style={styles.itemP4}>{data.proAvatar}</Text>
           <Text style={styles.itemP3}>R$ {data.proPreVenda}</Text>
         </View>        
       </View>  
@@ -96,6 +105,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#8f0606',
+  },
+  itemP4: {
+    marginTop: 15,
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: '#14aa7d',
+    color: '#511257',
   },
   button: {
     width: '100%',    

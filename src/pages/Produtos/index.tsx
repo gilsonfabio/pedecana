@@ -23,7 +23,7 @@ export interface ProductsProps {
     idProd: string;
     proDescricao: string;
     proReferencia: string;
-    proAvatar: string;
+    proAvatar: number;
 }
 
 const Produtos = () => {

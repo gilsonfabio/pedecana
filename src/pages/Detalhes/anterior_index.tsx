@@ -1,4 +1,4 @@
-import React, { useState, useEffect,  useContext  } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,7 +10,6 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../contexts/auth';
 
 import api from '../../pages/Services/api';
 
@@ -26,12 +25,6 @@ type AvatarProps = {
   proAvatar: number;
 }
 
-type UserProps = {
-    idUsr: number;
-    nome: string;
-    email: string;
-    status: string;
-  }
 
 const Detalhes = () => {
   const [idProduto, setIdProduto] = useState('');
@@ -45,9 +38,7 @@ const Detalhes = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { proId } = route.params as ParamsProps;
-  
-  const { idUsr } = useContext(AuthContext) as UserProps;
-  
+
   const imageUrl = require("../../assets/images/1.jpg");
 
   const images = [
@@ -88,14 +79,6 @@ const Detalhes = () => {
   const onPress = () => {    
     setCount(prevCount => prevCount + 1);
     
-    //api.post('newprocar', {
-    //    idUsr,
-    //    idProduto,   
-    //}).then(() => {
-    //    alert('Produto separado com sucesso!')
-    //}).catch(() => {
-    //    alert('Erro no cadastro!');
-    //})  
   }
   return (
     <View style={styles.container}>
@@ -113,14 +96,14 @@ const Detalhes = () => {
       </View>    
       <View>  
         <Image source={images[proAvatar].path} resizeMode="cover" />
-        <Text>{idProduto} - {proDescricao}</Text>
-        <Text>{proReferencia}</Text>
-        <View>
-          <View>
-            <Text>R$ {proPreNormal}</Text>
+        <Text style={styles.title}>{idProduto} - {proDescricao}</Text>
+        <Text style={styles.subTitle}>{proReferencia}</Text>
+        <View style={styles.containerBtn} >
+          <View style={styles.btnNormal}>
+            <Text style={styles.txtPreNormal}>R$ {proPreNormal}</Text>
           </View>
-          <TouchableOpacity onPress={onPress}>  
-            <Text>R$ {proPrePromo}</Text>
+          <TouchableOpacity style={styles.btnPromo} onPress={onPress}>  
+            <Text style={styles.txtPrePromo}>R$ {proPrePromo}</Text>
           </TouchableOpacity>
         </View>          
       </View>                            
