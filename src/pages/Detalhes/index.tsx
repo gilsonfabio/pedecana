@@ -57,6 +57,7 @@ const Detalhes = () => {
   const [iteCarProVlrUnit, setIteCarProVlrUnit] = useState();
   const [iteCarProVlrtotal, setIteCarProVlrtotal] = useState();
 
+  const [count, setCount] = useState(0);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -86,9 +87,7 @@ const Detalhes = () => {
     { id: 16, path: require('../../assets/images/16.jpg') },
   ];
 
-
   useEffect(() => {
-
     api.get(`detproduct/${proId}`).then(response => { 
         setIdProduto(response.data.idProd);
         setProDescricao(response.data.proDescricao);
@@ -97,10 +96,15 @@ const Detalhes = () => {
         //setProPrePromo(response.data.proPrePromo);
         //setProQtdEstoque(response.data.proQtdEstoque);
         setProAvatar(response.data.proAvatar);
-    }) 
+    })
+    
+    let idUsrCar = user.idUsr;
+    api.get(`searchCar/${idUsrCar}`).then(resp => { 
+      setCount(resp.data.carQtdtotal)
+    })
+    
   }, []);
 
-  const [count, setCount] = useState(0);
   const onPress = () => {    
     setCount(prevCount => prevCount + 1);
     
@@ -108,7 +112,6 @@ const Detalhes = () => {
     let dataAtual = new Date()
     let desconto = 0;
     let cupom = "";
-
 
     api.post('newprocar', {
         carData: new Date(),
