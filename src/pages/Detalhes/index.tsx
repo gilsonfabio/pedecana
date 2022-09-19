@@ -11,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth';
+import moment from 'moment';
 
 import api from '../../pages/Services/api';
 
@@ -42,11 +43,26 @@ const Detalhes = () => {
   const [proQtdEstoque, setProQtdEstoque] = useState('');
   const [proAvatar, setProAvatar] = useState(0);
 
+
+  const [carData, setCarData] = useState();
+  const [carHora, setCarHora] = useState();
+  const [carUser, setCarUser] = useState();
+  const [carQtdTotal, setCarQtdTotal] = useState();
+  const [carVlrTotal, setCarVlrTotal] = useState();
+  const [carDesTotal, setCarDesTotal] = useState();
+  const [carCodCupom, setCarCodCupom] = useState();
+  const [carVlrPagar, setCarVlrPagar] = useState();
+  const [iteCarProId, setIteCarProId] = useState();
+  const [iteCarProQtde, setIteCarProQtde] = useState();
+  const [iteCarProVlrUnit, setIteCarProVlrUnit] = useState();
+  const [iteCarProVlrtotal, setIteCarProVlrtotal] = useState();
+
+
   const navigation = useNavigation();
   const route = useRoute();
   const { proId } = route.params as ParamsProps;
   
-  const { idUsr } = useContext(AuthContext) as UserProps;
+  const {user } = useContext(AuthContext);
   
   const imageUrl = require("../../assets/images/1.jpg");
 
@@ -88,14 +104,29 @@ const Detalhes = () => {
   const onPress = () => {    
     setCount(prevCount => prevCount + 1);
     
-    //api.post('newprocar', {
-    //    idUsr,
-    //    idProduto,   
-    //}).then(() => {
-    //    alert('Produto separado com sucesso!')
-    //}).catch(() => {
-    //    alert('Erro no cadastro!');
-    //})  
+    let qtdProd = 1;
+    let dataAtual = new Date()
+    let desconto = 0;
+    let cupom = "";
+
+
+    api.post('newprocar', {
+        carData: new Date(),
+        carHora: moment().format('LTS'), 
+        carUser: user.idUsr, 
+        carQtdTotal: qtdProd, 
+        carVlrTotal: proPreNormal, 
+        carDesTotal: desconto, 
+        carCodCupom: cupom, 
+        carVlrPagar: proPreNormal,
+        iteCarProId: proId, 
+        iteCarProQtde: qtdProd, 
+        iteCarProVlrUnit: proPreNormal, 
+    }).then(() => {
+        alert('Produto separado com sucesso!')
+    }).catch(() => {
+        alert('Erro no cadastro!');
+    })  
   }
   return (
     <View style={styles.container}>
