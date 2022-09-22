@@ -1,19 +1,21 @@
 import React, { useState, useEffect} from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 
-type ProductsProps = {
-  idProd: string;
-  proDescricao: string;
-  proReferencia: string;
-  proAvatar: number;
+export interface ProductsProps {
+  iteCarId: number;
+  iteCarIte: number;
+  iteCarProId: number;
+  iteCarProQtde: number;
+  iteCarProVlrUnit: number;
+  iteCarProVlrTotal: number;
 }
 
 const width = Dimensions.get('window').width - 5; 
 
-const ListItem = ({ data }:any) => {
+const ListIteCar = ({ data }:any) => {
 
-  const codProd = 4;
   const imageUrl = require("../../assets/images/1.jpg");
   const navigation = useNavigation();
 
@@ -44,16 +46,21 @@ const ListItem = ({ data }:any) => {
   }
 
   return (
-    <TouchableOpacity style={styles.item} onPress={handleDetalhes}>
+    <View style={styles.item} >
       <View style={[styles.containerProd, styles.shadowProp]}>
-        <Image source={images[data.proAvatar].path} style={styles.itemPhoto} resizeMode="contain" />
         <View style={styles.itemInfo}>
           <Text style={styles.itemP1}>{data.proDescricao}</Text>
           <Text style={styles.itemP2}>{data.proReferencia}</Text>
           <Text style={styles.itemP3}>R$ {data.proPreVenda}</Text>
+          
+          <View>                      
+            <AntDesign name="minuscircleo" size={24} color="black" />
+            <Text> / </Text>
+            <AntDesign name="pluscircleo" size={24} color="black" />
+          </View>
         </View>        
       </View>  
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -120,6 +127,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#14aa7d',
     padding: 10
   },
+  carShop: {
+
+  },
+  iconCar: {
+
+  }
 });
 
-export default ListItem;
+export default ListIteCar;

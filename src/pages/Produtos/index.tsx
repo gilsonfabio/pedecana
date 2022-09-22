@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import ListItem from '../../components/ListItem';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -66,10 +66,15 @@ const Produtos = () => {
       <View style={styles.header}>
         <Text style={styles.txtProducts} >Lista de Produtos: {user.nome}</Text>
         <TouchableOpacity onPress={() => {}} style={styles.btnCar}>
+          <View style={styles.carShop}>                      
+            <AntDesign name="rocket1" size={24} color="black" style={styles.iconCar} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {}} style={styles.btnCar}>
           <View style={styles.carShop}>
             <View style={styles.backQtde}>
               <Text style={styles.qtde}>99</Text>
-            </View>  
+            </View>            
             <FontAwesome name="shopping-cart" size={26} color="black" style={styles.iconCar} />
           </View>
         </TouchableOpacity>  

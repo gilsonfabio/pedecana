@@ -28,34 +28,24 @@ type AvatarProps = {
 }
 
 type UserProps = {
-    idUsr: number;
-    nome: string;
-    email: string;
-    status: string;
-  }
+  idUsr: number;
+  nome: string;
+  email: string;
+  status: string;
+}
+
+type CarProps = {
+  carId: number;
+}
 
 const Detalhes = () => {
   const [idProduto, setIdProduto] = useState('');
   const [proDescricao, setProDescricao] = useState('');
   const [proReferencia, setProReferencia] = useState('');
   const [proPreNormal, setProPreNormal] = useState('');
-  const [proPrePromo, setProPrePromo] = useState('');
-  const [proQtdEstoque, setProQtdEstoque] = useState('');
   const [proAvatar, setProAvatar] = useState(0);
 
-
-  const [carData, setCarData] = useState();
-  const [carHora, setCarHora] = useState();
-  const [carUser, setCarUser] = useState();
-  const [carQtdTotal, setCarQtdTotal] = useState();
-  const [carVlrTotal, setCarVlrTotal] = useState();
-  const [carDesTotal, setCarDesTotal] = useState();
-  const [carCodCupom, setCarCodCupom] = useState();
-  const [carVlrPagar, setCarVlrPagar] = useState();
-  const [iteCarProId, setIteCarProId] = useState();
-  const [iteCarProQtde, setIteCarProQtde] = useState();
-  const [iteCarProVlrUnit, setIteCarProVlrUnit] = useState();
-  const [iteCarProVlrtotal, setIteCarProVlrtotal] = useState();
+  const [nroCar, setNroCar] = useState();
 
   const [count, setCount] = useState(0);
 
@@ -97,12 +87,13 @@ const Detalhes = () => {
         //setProQtdEstoque(response.data.proQtdEstoque);
         setProAvatar(response.data.proAvatar);
     })
-    
+
     let idUsrCar = user.idUsr;
     api.get(`searchCar/${idUsrCar}`).then(resp => { 
+      setNroCar(resp.data.carId)
       setCount(resp.data.carQtdtotal)
     })
-    
+   
   }, []);
 
   const onPress = () => {    
@@ -131,12 +122,17 @@ const Detalhes = () => {
         alert('Erro no cadastro!');
     })  
   }
+
+  function handleCarShopping(){
+    navigation.navigate('CarShopping', {carId: nroCar} );
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <View style={styles.header}>
         <Text style={styles.txtProducts} >Detalhes do Produto:{proId} - {idProduto} </Text>
-        <TouchableOpacity onPress={() => {}} style={styles.btnCar}>
+        <TouchableOpacity onPress={handleCarShopping} style={styles.btnCar}>
           <View style={styles.carShop}>
             <View style={styles.backQtde}>
               <Text style={styles.qtde}>{count}</Text>
@@ -145,16 +141,16 @@ const Detalhes = () => {
           </View>
         </TouchableOpacity>
       </View>    
-      <View>  
-        <Image source={images[proAvatar].path} resizeMode="cover" />
-        <Text>{idProduto} - {proDescricao}</Text>
-        <Text>{proReferencia}</Text>
+      <View >
+        <Image source={images[proAvatar].path} style={styles.itemPhoto} resizeMode="contain" />
+        <Text style={styles.title}>{idProduto} - {proDescricao}</Text>
+        <Text style={styles.subTitle}>{proReferencia}</Text>
         <View>
           <View>
-            <Text>R$ {proPreNormal}</Text>
+            <Text style={styles.txtPreNormal}>R$ {proPreNormal}</Text>
           </View>
-          <TouchableOpacity onPress={onPress}>  
-            <Text>R$ {proPrePromo}</Text>
+          <TouchableOpacity style={styles.button} onPress={onPress}>  
+            <Text style={styles.buttonText}>Adicionar ao carrinho</Text>
           </TouchableOpacity>
         </View>          
       </View>                            
@@ -233,21 +229,30 @@ const styles = StyleSheet.create({
     marginTop: -10,
   },
 
+  containerImg: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: '50%',
+  },
+
   itemPhoto:{
-    resizeMode: 'couver',
+    width: '100%',
+    height: '50%',
     marginTop: 5,
   },
 
   title: {
     marginTop: 10,
-    fontSize: 25,
+    marginLeft: 10,
+    fontSize: 22,
     color: '#000',
   },
 
   subTitle: {
-    marginTop: 10,
+    marginTop: 5,
+    marginLeft: 10,
     fontSize: 20,
-    color: '#DDD',
+    color: '#990808',
   },
 
   containerBtn: {
@@ -267,22 +272,27 @@ const styles = StyleSheet.create({
   },
 
   txtPreNormal: {
-    color: '#fff',
-    fontSize: 20,
+    marginTop: 20,
+    marginLeft: 250,
+    color: '#066927',
+    fontSize: 28,
   },
 
-  btnPromo: {
+  button: {
+    marginTop: 25,
+    backgroundColor: '#FF7826',
+    borderRadius: 4,
+    paddingVertical: 8,
     width: '50%',
-    height: 40,
-    backgroundColor: '#1c665c',
-    color: '#fff',
+    marginLeft: 100,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
-  txtPrePromo: {
-    color: '#fff',
-    fontSize: 25,
+  buttonText: {
+    fontSize: 18,
+    color: '#FFF',
+    fontWeight: 'bold'
   },
 
 });

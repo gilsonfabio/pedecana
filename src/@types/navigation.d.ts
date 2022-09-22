@@ -5,6 +5,9 @@ export declare global {
            Detalhes: {
             proId: string;
            }
+           CarShopping: {
+            carId: number;
+           }
         }
     }
 }
