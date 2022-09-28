@@ -10,15 +10,17 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import ListIteCar from '../../components/ListItem';
+import ListIteCar from '../../components/ListIteCar';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import api from '../Services/api';
 import { AuthContext } from '../../contexts/auth';
+import LocEntrega from '../LocEntrega';
 
 export interface CarProps {
   carId: number;
@@ -53,6 +55,7 @@ export interface numberCarProps {
 const CarShopping = () => {
   const [car, setCar] = useState<Array<CarProps>>([]); 
   const [items, setItems] = useState<Array<ProductsProps>>([]); 
+  const [atualiza, setAtualiza] = useState(0);
 
   const [idCar, setIdCar] = useState(0);
   const [carData, setCarData] = useState('');
@@ -91,25 +94,29 @@ const CarShopping = () => {
     })  
   }, []);
 
+  function handleLocEntrega(){
+    navigation.navigate("LocEntrega");
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.txtProducts} >Lista de Compras: {carId}</Text>
       </View>
-      <View>
-        <Text>Nro Pedido: {idCar}</Text>
+      <View style={styles.content}>
+        <Text style={styles.txtPedido}>Nro Pedido: {idCar}</Text>
         <Text>Data: {carData} - {carHora}</Text>
       </View>    
 
       <FlatList
         data={items}
         style={styles.list}
-        numColumns={2}
+        numColumns={1}
         renderItem={({ item }) => <ListIteCar data={item} />}
         keyExtractor={(item) => item.iteCarIte.toString()}
       />
       <View>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={handleLocEntrega}>
           <Text style={styles.buttonText}>Finaliza Compra</Text>
         </TouchableOpacity>
       </View>
@@ -125,12 +132,18 @@ const styles = StyleSheet.create({
   },
   
   header: {
+    marginBottom: 10,
     flexDirection: 'row',
     height: 120,
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#FF7826',
     color: '#FFF',
+  },
+
+  content: {
+    marginTop:10,
+    marginBottom: 10,
   },
 
   icone: {
@@ -163,6 +176,10 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
+  },
+
+  txtPedido: {
+    fontSize: 25,
   },
 
   txtProducts: {

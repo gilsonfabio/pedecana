@@ -5,6 +5,7 @@ import SignIn from '../pages/SignIn';
 import Produtos from '../pages/Produtos';
 import Detalhes from '../pages/Detalhes';
 import CarShopping from '../pages/CarShopping';
+import LocEntrega from '../pages/LocEntrega';
 
 type navigationProps = {
     Welcome: undefined;
@@ -12,6 +13,7 @@ type navigationProps = {
     Produtos: undefined;
     Detalhes: {proId: number} | undefined;
     CarShopping: {carId: number} | undefined;
+    LocEntrega: undefined;
 }
 
 const Stack = createNativeStackNavigator<navigationProps>();
@@ -24,6 +26,7 @@ export default function Routes(){
             <Stack.Screen name="Produtos" component={Produtos} options={{headerShown:false}}/>
             <Stack.Screen name="Detalhes" component={Detalhes} options={{headerShown:false}} />
             <Stack.Screen name="CarShopping" component={CarShopping} options={{headerShown:false}} />
+            <Stack.Screen name="LocEntrega" component={LocEntrega} options={{headerShown:false}} />
         </Stack.Navigator>
     )
 }

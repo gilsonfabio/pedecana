@@ -2,6 +2,9 @@ import React, { useState, useEffect} from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
+import moment from 'moment';
+
+import api from '../../pages/Services/api';
 
 export interface ProductsProps {
   iteCarId: number;
@@ -41,98 +44,89 @@ const ListIteCar = ({ data }:any) => {
     { id: 16, path: require('../../assets/images/16.jpg') },
   ];
 
-  function handleDetalhes(){
-    navigation.navigate('Detalhes', {proId: data.idProd});
+  const onPressAdd = () => {    
+    let qtdProd = 1;
+    api.post('adiprocar', {   
+      iteCarId: data.iteCarId,
+      iteCarIte: data.iteCarIte,
+      iteCarProId: data.iteCarProId,
+      iteCarProQtde: data.iteCarProQtde,
+      iteCarProVlrUnit: data.iteCarProVlrUnit,
+      iteCarProVlrTotal: data.iteCarProVlrTotal,
+    }).then(() => {
+        alert('Produto adicionado com sucesso!')
+    }).catch(() => {
+        alert('Erro no cadastro!');
+    })  
+    
+  }
+
+  const onPressSub = () => {    
+    let qtdProd = 1;
+    api.post('subprocar', {      
+      iteCarId: data.iteCarId,
+      iteCarIte: data.iteCarIte,
+      iteCarProId: data.iteCarProId,
+      iteCarProQtde: data.iteCarProQtde,
+      iteCarProVlrUnit: data.iteCarProVlrUnit,
+      iteCarProVlrTotal: data.iteCarProVlrTotal,
+    }).then(() => {
+        alert('Produto subtraido com sucesso!')
+    }).catch(() => {
+        alert('Erro no cadastro!');
+    })  
   }
 
   return (
-    <View style={styles.item} >
-      <View style={[styles.containerProd, styles.shadowProp]}>
-        <View style={styles.itemInfo}>
-          <Text style={styles.itemP1}>{data.proDescricao}</Text>
-          <Text style={styles.itemP2}>{data.proReferencia}</Text>
-          <Text style={styles.itemP3}>R$ {data.proPreVenda}</Text>
+    <View style={styles.containerProd}>
+      <View style={styles.itemInfo}>
+        <Text>{data.proDescricao}</Text>
+        <Text>{data.proReferencia}</Text>
+        <Text>{data.iteCarProQtde}</Text>
+        <Text>R$ {data.iteCarProVlrTotal}</Text>
           
-          <View>                      
-            <AntDesign name="minuscircleo" size={24} color="black" />
-            <Text> / </Text>
-            <AntDesign name="pluscircleo" size={24} color="black" />
-          </View>
-        </View>        
-      </View>  
-    </View>
+        <TouchableOpacity style={styles.buttonSub} onPress={onPressSub}>  
+          <AntDesign name="minuscircleo" size={24} color='white' />
+        </TouchableOpacity>                   
+        <TouchableOpacity style={styles.buttonAdd} onPress={onPressAdd}>  
+          <AntDesign name="pluscircleo" size={24} color='white' />
+        </TouchableOpacity>            
+        
+      </View>        
+    </View>  
   );
 };
 
 const styles = StyleSheet.create({  
   containerProd: { 
-    width: width / 2 - 10, 
-    height: 250,
-    backgroundColor: '#DDD',
-    borderRadius: 10,
-  },
-  
-  shadowProp: {
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-
-  item: {
-    flexDirection: 'row',
-    marginLeft: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#181616',
-    paddingTop: 15,
-    paddingBottom: 15,
-  },
-  
-  itemPhoto: {
     width: '100%',
-    height: 120,
-    borderRadius: 5,
+    backgroundColor: '#FFF',
+    marginBottom: 5,
   },
+  
   itemInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginLeft: 5,
   },
-  itemP1: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 5
-  },
-  itemP2: {
-    fontSize: 16,
-    color: '#1b18b3',
-    fontWeight: 'bold',
-  },
-  itemP3: {
-    marginTop: 15,
-    marginLeft: 100,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#185512',
-  },
-  itemP4: {
-    marginTop: 15,
-    fontSize: 20,
-    fontWeight: 'bold',
-    backgroundColor: '#14aa7d',
-    color: '#511257',
-  },
-  button: {
-    width: '100%',    
+  
+  buttonAdd: {
     alignItems: 'center',
     backgroundColor: '#14aa7d',
-    padding: 10
+    color: '#fff',
+    padding: 2, 
+    borderRadius: 50,
   },
-  carShop: {
 
+  buttonSub: {
+    alignItems: 'center',
+    backgroundColor: '#9e1313',
+    color: '#fff',
+    padding: 2,
+    borderRadius: 50,
   },
-  iconCar: {
 
-  }
 });
 
 export default ListIteCar;
