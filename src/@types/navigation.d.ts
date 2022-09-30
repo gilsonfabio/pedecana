@@ -8,6 +8,8 @@ export declare global {
            CarShopping: {
             carId: number;
            }
+           FrmPagto: undefined;
+           CarCredit: undefined;
         }
     }
 }

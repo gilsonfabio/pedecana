@@ -31,7 +31,7 @@ const Produtos = () => {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState(produtos);
 
-  const {user } = useContext(AuthContext);
+  const {user }: any = useContext(AuthContext);
 
   useEffect(() => {
     api.get(`products`).then(response => { 

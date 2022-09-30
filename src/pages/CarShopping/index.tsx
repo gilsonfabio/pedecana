@@ -95,7 +95,7 @@ const CarShopping = () => {
   }, []);
 
   function handleLocEntrega(){
-    navigation.navigate("LocEntrega");
+    navigation.navigate("FrmPagto");
   }
 
   return (
