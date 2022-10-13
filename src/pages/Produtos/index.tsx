@@ -13,6 +13,7 @@ import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import ListItem from '../../components/ListItem';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,10 +27,28 @@ export interface ProductsProps {
     proAvatar: number;
 }
 
+type ParamsProps = {
+  proId: number;
+  idProduto: number;
+  proDescricao: string;
+  proReferencia: string;
+  proPreNormal: number; 
+}
+
+type CarProps = {
+  carId: number;
+}
+
 const Produtos = () => {
   const [produtos, setProdutos] = useState<Array<ProductsProps>>([]); 
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState(produtos);
+
+  const [nroCar, setNroCar] = useState();
+  const [count, setCount] = useState(0);
+
+  const navigation = useNavigation();
+  const route = useRoute();
 
   const {user }: any = useContext(AuthContext);
 
@@ -38,6 +57,13 @@ const Produtos = () => {
         setProdutos(response.data);
         setList(response.data);        
     }) 
+    
+    let idUsrCar = user.idUsr;
+    api.get(`searchCar/${idUsrCar}`).then(resp => { 
+      setNroCar(resp.data.carId)
+      setCount(resp.data.carQtdtotal)
+    })
+
   }, []);
 
   useEffect(() => {
@@ -61,6 +87,10 @@ const Produtos = () => {
     setList(newList);
   };
 
+  function handleCarShopping(){
+    navigation.navigate('CarShopping', {carId: nroCar} );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -70,10 +100,10 @@ const Produtos = () => {
             <AntDesign name="rocket1" size={24} color="black" style={styles.iconCar} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={styles.btnCar}>
+        <TouchableOpacity onPress={handleCarShopping} style={styles.btnCar}>
           <View style={styles.carShop}>
             <View style={styles.backQtde}>
-              <Text style={styles.qtde}>99</Text>
+              <Text style={styles.qtde}>{count}</Text>
             </View>            
             <FontAwesome name="shopping-cart" size={26} color="black" style={styles.iconCar} />
           </View>
@@ -136,7 +166,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 50,
-    backgroundColor: '#363636',
+    backgroundColor: '#1b1c1d',
     margin: 30,
     borderRadius: 5,
     fontSize: 19,

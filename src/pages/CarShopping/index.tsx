@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useState, useEffect } from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import Moment from 'moment';
 import {
   SafeAreaView,
   View,
@@ -105,7 +106,7 @@ const CarShopping = () => {
       </View>
       <View style={styles.content}>
         <Text style={styles.txtPedido}>Nro Pedido: {idCar}</Text>
-        <Text>Data: {carData} - {carHora}</Text>
+        <Text style={styles.txtPedido}>Data: {Moment(carData).format('DD-MM-YYYY')} - {carHora}</Text>
       </View>    
 
       <FlatList
@@ -115,6 +116,10 @@ const CarShopping = () => {
         renderItem={({ item }) => <ListIteCar data={item} />}
         keyExtractor={(item) => item.iteCarIte.toString()}
       />
+
+      <View>
+        <Text style={styles.txtPedido}>R$: {carVlrTotal}</Text>
+      </View>
       <View>
         <TouchableOpacity style={styles.button} onPress={handleLocEntrega}>
           <Text style={styles.buttonText}>Finaliza Compra</Text>

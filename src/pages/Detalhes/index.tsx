@@ -46,7 +46,6 @@ const Detalhes = () => {
   const [proAvatar, setProAvatar] = useState(0);
 
   const [nroCar, setNroCar] = useState();
-
   const [count, setCount] = useState(0);
 
   const navigation = useNavigation();

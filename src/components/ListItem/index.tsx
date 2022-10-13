@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   containerProd: { 
     width: width / 2 - 10, 
     height: 250,
-    backgroundColor: '#DDD',
+    backgroundColor: '#FFF',
     borderRadius: 10,
   },
   
@@ -75,8 +75,6 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     marginLeft: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#181616',
     paddingTop: 15,
     paddingBottom: 15,
   },
